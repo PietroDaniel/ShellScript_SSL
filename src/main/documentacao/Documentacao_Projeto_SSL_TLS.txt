@@ -1,0 +1,64 @@
+## Requisitos do Projeto:
+- OpenSSL instalado para geração de certificados.
+- Java 8 ou superior.
+- Ambiente de desenvolvimento configurado com o Maven.
+
+---
+
+## Passo a Passo de Execução
+
+### 1. Geração de Certificados com Shell Script
+1. Navegue até o diretório onde o script bash `gerar_certificados.sh` está salvo.
+2. Torne o script executável com o comando:
+   ```bash
+   chmod +x gerar_certificados.sh
+   ```
+3. Execute o script para gerar os certificados:
+   ```bash
+   ./gerar_certificados.sh
+   ```
+4. O script solicitará as seguintes informações:
+   - Nome do domínio ou IP.
+   - Nome da organização.
+   - Cidade.
+   - Estado.
+   - País (código de dois dígitos).
+5. Após a execução, os seguintes arquivos de certificados serão gerados:
+   - `server.crt`: Certificado autoassinado.
+   - `server.key`: Chave privada associada ao certificado.
+
+---
+
+### 2. Configuração do Servidor SSL/TLS
+1. Navegue até o diretório do projeto Java que contém a classe `SecureServer`.
+2. Compile e execute o servidor usando Maven:
+   ```bash
+   mvn clean compile exec:java -Dexec.mainClass="SecureServer"
+   ```
+3. O servidor será iniciado na porta **8443** e ficará aguardando conexões seguras dos clientes.
+
+---
+
+### 3. Configuração do Cliente SSL/TLS
+1. Navegue até o diretório do projeto Java que contém a classe `SecureClient`.
+2. Compile e execute o cliente usando Maven:
+   ```bash
+   mvn clean compile exec:java -Dexec.mainClass="SecureClient"
+   ```
+3. O cliente tentará se conectar ao servidor na porta **8443** e exibirá a mensagem recebida do servidor caso a conexão seja estabelecida com sucesso.
+
+---
+
+### 4. Testes de Segurança
+1. Utilize ferramentas como **Wireshark** para capturar o tráfego da rede e verificar se a comunicação entre cliente e servidor está devidamente criptografada.
+   - Abra o Wireshark e comece a capturar o tráfego da interface de rede utilizada pela aplicação.
+   - Filtre o tráfego por "TLS" ou "SSL" para ver as informações de handshake e troca de dados criptografados.
+2. Opcionalmente, utilize o **SSL Labs** para testar a validade e segurança do certificado gerado pelo script.
+
+---
+
+## Tratamento de Exceções
+As exceções no projeto são tratadas pela classe personalizada `SSLSecurityException`, que lida com os seguintes erros:
+1. **Certificado Inválido ou Não Confiável**: Lançado no handshake SSL quando o certificado é inválido.
+2. **Erros de Arquivo (KeyStore ou TrustStore não encontrados)**: Lançado quando o arquivo necessário não é encontrado.
+3. **Erros de I/O**: Lançado em caso de problemas de leitura/escrita de dados entre cliente e servidor.

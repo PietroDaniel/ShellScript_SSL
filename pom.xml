@@ -12,39 +12,9 @@
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
-  <dependencies>
-    <!-- Dependência necessária para comunicação segura com SSL/TLS -->
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
-      <version>1.68</version>
-    </dependency>
-
-    <!-- JUnit para testes unitários -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Biblioteca SLF4J para logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.32</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>1.7.32</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
-      <!-- Plugin do compilador para Java 17 -->
+      
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
